@@ -941,6 +941,10 @@ const OPENAI_COMPATIBLE_SPEC_OVERRIDES: BuiltinSpecOverride[] = [
 		// coding agent. Pin the coding flagship instead: tool calling,
 		// reasoning and a 1.05M-token context.
 		defaultModelId: "openai/gpt-6.1-sol",
+		// Ranks the provider list and puts it in the picker's "Popular" section
+		// instead of the alphabetical tail. Placed with the other aggregators:
+		// after anthropic (15), ahead of openrouter (20).
+		popular: 18,
 		apiKeyEnv: ["AIMLAPI_API_KEY"],
 		modelsProviderId: "aimlapi",
 		defaults: { baseUrl: "https://api.aimlapi.com/v1" },
