@@ -457,6 +457,21 @@ describe("built-in provider metadata", () => {
 		expect(defaultModel?.pricing).toBeDefined();
 	});
 
+	it("curates the AI/ML API default model and description over the generated spec", async () => {
+		const provider = await getProvider("aimlapi");
+		const models = await getModelsForProvider("aimlapi");
+		const defaultModel = models[provider?.defaultModelId ?? ""];
+
+		expect(provider?.defaultModelId).toBe("openai/gpt-6.1-sol");
+		expect(provider?.description).not.toMatch(/from models\.dev$/);
+		// Resolves to a real catalog record rather than the 128k stub
+		// fallbackModelInfo synthesizes for a default missing from the catalog,
+		// and keeps the tool calling an agent needs. Bounds instead of exact
+		// values: the numbers rotate with models.dev.
+		expect(defaultModel?.capabilities).toContain("tools");
+		expect(defaultModel?.contextWindow).toBeGreaterThan(128_000);
+	});
+
 	it("derives ChatGPT subscription models from the generated OpenAI catalog", async () => {
 		const chatGptModels = await getModelsForProvider("openai-codex");
 		const openAiModels = await getModelsForProvider("openai-native");

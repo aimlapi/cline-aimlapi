@@ -931,6 +931,21 @@ const OPENAI_COMPATIBLE_SPEC_OVERRIDES: BuiltinSpecOverride[] = [
 		metadata: ANTHROPIC_ROUTING_METADATA,
 	},
 	{
+		id: "aimlapi",
+		name: "AI/ML API",
+		description:
+			"Aggregator serving several hundred chat models from multiple vendors behind one OpenAI-compatible endpoint and API key",
+		family: "openai-compatible",
+		// The generated default is whichever chat model models.dev happens to
+		// list first, which is release-date ordering rather than a fit for a
+		// coding agent. Pin the coding flagship instead: tool calling,
+		// reasoning and a 1.05M-token context.
+		defaultModelId: "openai/gpt-6.1-sol",
+		apiKeyEnv: ["AIMLAPI_API_KEY"],
+		modelsProviderId: "aimlapi",
+		defaults: { baseUrl: "https://api.aimlapi.com/v1" },
+	},
+	{
 		id: "hicap",
 		name: "HiCap",
 		description: "HiCap AI platform",
